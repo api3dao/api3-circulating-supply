@@ -49,12 +49,12 @@ const vestingAddresses = [
 ];
 
 module.exports = async ({ getUnnamedAccounts, deployments }) => {
-  const LockedApi3 = await deployments.get("LockedApi3");
-  const lockedApi3 = new ethers.Contract(
-    LockedApi3.address,
-    LockedApi3.abi,
+  const Api3CirculatingSupply = await deployments.get("Api3CirculatingSupply");
+  const api3CirculatingSupply = new ethers.Contract(
+    Api3CirculatingSupply.address,
+    Api3CirculatingSupply.abi,
     await hre.ethers.provider.getSigner()
   );
-  await lockedApi3.setVestingAddresses(vestingAddresses);
+  await api3CirculatingSupply.setVestingAddresses(vestingAddresses);
   console.log("Set vesting addresses!");
 };

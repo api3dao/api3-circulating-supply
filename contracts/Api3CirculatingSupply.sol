@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/IApi3Pool.sol";
 import "./interfaces/ITimelockManager.sol";
 
-contract LockedApi3 is Ownable {
+contract Api3CirculatingSupply is Ownable {
     event SetVestingAddresses(address[] vestingAddresses);
 
     address public constant API3_TOKEN =
@@ -41,21 +41,24 @@ contract LockedApi3 is Ownable {
         emit SetVestingAddresses(_vestingAddresses);
     }
 
-    function getTotalLocked() external view returns (uint256 totalLocked) {
-        totalLocked = getTimelocked() + getLockedByGovernance();
+    function getCirculatingSupply() external view returns (uint256) {
+        return api3Token.totalSupply() - getTotalLocked();
     }
 
-    function getTimelocked() public view returns (uint256 timelocked) {
-        timelocked = getLockedRewards() + getLockedVestings();
+    function getTotalLocked() public view returns (uint256) {
+        return getTimelocked() + getLockedByGovernance();
+    }
+
+    function getTimelocked() public view returns (uint256) {
+        return getLockedRewards() + getLockedVestings();
     }
 
     function getLockedByGovernance()
         public
         view
-        returns (uint256 lockedByGoverance)
+        returns (uint256)
     {
-        lockedByGoverance =
-            api3Token.balanceOf(V1_TREASURY) +
+        return api3Token.balanceOf(V1_TREASURY) +
             api3Token.balanceOf(PRIMARY_TREASURY) +
             api3Token.balanceOf(SECONDARY_TREASURY);
     }
