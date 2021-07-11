@@ -1,8 +1,10 @@
 node_modules
 
-#Hardhat files
+.serverless
+
 cache
 artifacts
 *.flat.sol
 
 credentials.json
+secrets.json

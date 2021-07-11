@@ -1,0 +1,14 @@
+service: api3-circulating-supply
+
+provider:
+  name: aws
+  region: us-east-1
+  stage: dev
+  runtime: nodejs12.x
+  environment: ${file(secrets.json)}
+
+functions:
+  getCirculatingSupply:
+    handler: ./src/index.getCirculatingSupply
+    events:
+      - http: GET getCirculatingSupply
