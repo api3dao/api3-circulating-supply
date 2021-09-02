@@ -15,6 +15,8 @@ contract Api3CirculatingSupply is Ownable {
         0x6dd655f10d4b9E242aE186D9050B68F725c76d76;
     address public constant TIMELOCK_MANAGER =
         0xFaef86994a37F1c8b2A5c73648F07dd4eFF02baA;
+    address public constant TIMELOCK_MANAGER_REVERSIBLE =
+        0x310BBf92A36031F778C32FEaCa458251FD36F451;
     address public constant V1_TREASURY =
         0xe7aF7c5982e073aC6525a34821fe1B3e8E432099;
     address public constant PRIMARY_TREASURY =
@@ -58,9 +60,13 @@ contract Api3CirculatingSupply is Ownable {
         view
         returns (uint256)
     {
+        // The reversible timelock manager funds are treated as being locked by
+        // governance because they are not stakeable and are governed over by
+        // DAOv1
         return api3Token.balanceOf(V1_TREASURY) +
             api3Token.balanceOf(PRIMARY_TREASURY) +
-            api3Token.balanceOf(SECONDARY_TREASURY);
+            api3Token.balanceOf(SECONDARY_TREASURY) + 
+            api3Token.balanceOf(TIMELOCK_MANAGER_REVERSIBLE);
     }
 
     function getLockedRewards()

@@ -4,6 +4,7 @@
   "scripts": {
     "build": "hardhat compile",
     "deploy:mainnet": "hardhat deploy --network mainnet",
+    "deploy:serverless": "sls deploy",
     "flatten": "hardhat flatten > Api3CirculatingSupply.flat.sol && npm run flatten:delete-license-lines",
     "flatten:delete-license-lines": "sed --in-place '/SPDX-License-Identifier/d' *.flat.sol"
   },
@@ -17,6 +18,7 @@
     "chai": "^4.3.4",
     "ethereum-waffle": "^3.4.0",
     "hardhat": "^2.4.3",
-    "hardhat-deploy": "^0.8.11"
+    "hardhat-deploy": "^0.8.11",
+    "serverless": "^2.57.0"
   }
 }
